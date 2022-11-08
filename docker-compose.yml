@@ -67,7 +67,5 @@ volumes:
 
 
 networks:
-  default:
-    name: default
   proxy-tier:
     name: proxy-tier
