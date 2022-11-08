@@ -129,6 +129,7 @@ services:
       - VIRTUAL_HOST=monitor.$DOMAIN_NAME
       - LETSENCRYPT_HOST=monitor.$DOMAIN_NAME
       - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
+      - PGID=999
 
 
 volumes:
