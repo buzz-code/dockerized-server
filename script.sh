@@ -1,7 +1,9 @@
 ## first time
 # set environment variables
-set DOMAIN_NAME=DOMAIN.TLD
-set LETSENCRYPT_EMAIL=email@example.com
+nano .env
+# add the following
+DOMAIN_NAME=DOMAIN.TLD
+LETSENCRYPT_EMAIL=email@example.com
 
 # run code
 git clone https://github.com/buzz-code/dockerized-server.git
