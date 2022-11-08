@@ -111,6 +111,25 @@ services:
     ports:
       - "3306:3306"
 
+  netdata:
+    image: firehol/netdata
+    container_name: netdata
+    hostname: monitor.$DOMAIN_NAME
+    ports:
+      - 19999:19999
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - VIRTUAL_HOST=monitor.$DOMAIN_NAME
+      - LETSENCRYPT_HOST=monitor.$DOMAIN_NAME
+      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
+
 
 volumes:
   certs:
