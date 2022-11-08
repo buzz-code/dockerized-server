@@ -41,9 +41,9 @@ services:
     container_name: portainer
     restart: always
     environment:
-      - VIRTUAL_HOST=docker.DOMAIN.TLD
-      - LETSENCRYPT_HOST=docker.DOMAIN.TLD
-      - LETSENCRYPT_EMAIL=EMAIL
+      - VIRTUAL_HOST=docker.$DOMAIN_NAME
+      - LETSENCRYPT_HOST=docker.$DOMAIN_NAME
+      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - 'portainer_data:/data'
