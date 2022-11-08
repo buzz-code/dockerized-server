@@ -53,19 +53,13 @@ services:
 
   hello-world:
     image: hello-world
-    container_name: hello-world
 
 volumes:
   certs:
-    name: certs
   vhost.d:
-    name: vhost.d
   html:
-    name: html
   portainer_data:
-    name: portainer_data
 
 
 networks:
   proxy-tier:
-    name: proxy-tier
