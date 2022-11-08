@@ -131,6 +131,22 @@ services:
       - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
       - PGID=999
 
+  cadvisor:
+    container_name: cadvisor
+    image: 'google/cadvisor:latest'
+    volumes:
+      - '/:/rootfs:ro'
+      - '/var/run:/var/run:rw'
+      - '/sys:/sys:ro'
+      - '/var/lib/docker/:/var/lib/docker:ro'
+    ports:
+      - '8080:8080'
+    environment:
+      - VIRTUAL_HOST=cadvisor.$DOMAIN_NAME
+      - LETSENCRYPT_HOST=cadvisor.$DOMAIN_NAME
+      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
+    command: '--detach=true'
+
 
 volumes:
   certs:
