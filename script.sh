@@ -4,6 +4,10 @@ nano .env
 # add the following
 DOMAIN_NAME=DOMAIN.TLD
 LETSENCRYPT_EMAIL=email@example.com
+NEXTCLOUD_DB_ROOT_PASSWORD=PASSWORD
+NEXTCLOUD_DB_PASSWORD=PASSWORD
+NEXTCLOUD_DB_NAME=nextcloud
+NEXTCLOUD_DB_USER=nextcloud
 
 # run code
 git clone https://github.com/buzz-code/dockerized-server.git
