@@ -54,6 +54,30 @@ services:
   hello-world:
     image: hello-world
 
+  gitea:
+    image: gitea/gitea:latest
+    container_name: gitea
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=gitea.$DOMAIN_NAME
+      - LETSENCRYPT_HOST=gitea.$DOMAIN_NAME
+      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
+      - VIRTUAL_PORT=3000
+      - ROOT_URL=https://gitea.$DOMAIN_NAME
+      - DOMAIN=gitea.$DOMAIN_NAME
+      - PROTOCOL=http
+      - USER_UID=1000
+      - USER_GID=1000
+    volumes:
+      - ./gitea:/data
+    ports:
+      - "5000:3000"
+      - "222:22"
+    networks:
+      - proxy-tier
+      - default
+
+
 volumes:
   certs:
   vhost.d:
