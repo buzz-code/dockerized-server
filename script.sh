@@ -13,3 +13,7 @@ docker compose up -d
 ## updating the script
 git pull
 docker compose up -d
+
+## automatic updates for the apt dependencies
+sudo apt-get install unattended-upgrades
+sudo dpkg-reconfigure unattended-upgrades
