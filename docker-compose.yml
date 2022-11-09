@@ -163,7 +163,7 @@ services:
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
     ports:
       - '61208-61209:61208-61209'
-    restart: '"always"'
+    restart: 'always'
 
 
 volumes:
