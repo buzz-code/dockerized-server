@@ -147,6 +147,14 @@ services:
       - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
     command: '--detach=true'
 
+  prometheus-container:
+    container_name: prometheus-container
+    image: 'ubuntu/prometheus:2.33-22.04_beta'
+    environment:
+      - TZ=UTC
+    ports:
+      - '30090:9090'
+
 
 volumes:
   certs:
