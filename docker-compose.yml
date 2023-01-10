@@ -31,10 +31,9 @@ services:
       - /sys:/host/sys:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
-      - VIRTUAL_HOST=monitor.$DOMAIN_NAME
-      - LETSENCRYPT_HOST=monitor.$DOMAIN_NAME
-      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
-      - PGID=999
+      - url=https://monitor.yoman.online
+    networks:
+      - internal
 
   caddy:
     image: caddy:2.6.2
