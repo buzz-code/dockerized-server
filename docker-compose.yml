@@ -1,41 +1,6 @@
 version: '3.3'
 
 services:
-  proxy:
-    image: jwilder/nginx-proxy
-    container_name: proxy
-    restart: unless-stopped
-    labels:
-      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - certs:/etc/nginx/certs:rw
-      - vhost.d:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - ./uploadsize.conf:/etc/nginx/conf.d/uploadsize.conf:ro
-    ports:
-      - "80:80"
-      - "443:443"
-    networks:
-      - "default"
-      - "proxy-tier"
-
-  proxy-letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: letsencrypt
-    restart: unless-stopped
-    environment:
-      - NGINX_PROXY_CONTAINER=proxy
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    volumes_from:
-      - "proxy"
-    depends_on:
-      - "proxy"
-    networks:
-      - "default"
-      - "proxy-tier"
-
   portainer-ce:
     image: 'portainer/portainer-ce:latest'
     container_name: portainer
@@ -50,66 +15,6 @@ services:
     ports:
       - '8000:8000'
       - '9443:9443'
-
-  hello-world:
-    image: hello-world
-
-  gitea:
-    image: gitea/gitea:latest
-    container_name: gitea
-    restart: unless-stopped
-    environment:
-      - VIRTUAL_HOST=gitea.$DOMAIN_NAME
-      - LETSENCRYPT_HOST=gitea.$DOMAIN_NAME
-      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
-      - VIRTUAL_PORT=3000
-      - ROOT_URL=https://gitea.$DOMAIN_NAME
-      - DOMAIN=gitea.$DOMAIN_NAME
-      - PROTOCOL=http
-      - USER_UID=1000
-      - USER_GID=1000
-    volumes:
-      - ./gitea:/data
-    ports:
-      - "5000:3000"
-      - "222:22"
-    networks:
-      - proxy-tier
-      - default
-
-  nextcloud:
-    image: nextcloud:apache
-    container_name: nextcloud
-    restart: unless-stopped
-    environment:
-      - VIRTUAL_HOST=nextcloud.$DOMAIN_NAME
-      - LETSENCRYPT_HOST=nextcloud.$DOMAIN_NAME
-      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
-      - PGID=999
-      - PUID=1000
-    volumes:
-      - ./nextcloud:/var/www/html
-    ports:
-      - "666:80"
-    networks:
-      - proxy-tier
-      - default
-    depends_on:
-      - "nextcloud_db"
-
-  nextcloud_db:
-    image: mariadb
-    container_name: nextcloud_db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: $NEXTCLOUD_DB_ROOT_PASSWORD
-      MYSQL_PASSWORD: $NEXTCLOUD_DB_PASSWORD
-      MYSQL_DATABASE: $NEXTCLOUD_DB_NAME
-      MYSQL_USER: $NEXTCLOUD_DB_USER
-    volumes:
-      - ./db:/var/lib/mysql
-    ports:
-      - "3306:3306"
 
   netdata:
     image: firehol/netdata
@@ -131,47 +36,28 @@ services:
       - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
       - PGID=999
 
-  cadvisor:
-    container_name: cadvisor
-    image: 'google/cadvisor:latest'
+  caddy:
+    image: caddy:<version>
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
     volumes:
-      - '/:/rootfs:ro'
-      - '/var/run:/var/run:rw'
-      - '/sys:/sys:ro'
-      - '/var/lib/docker/:/var/lib/docker:ro'
-    ports:
-      - '8080:8080'
-    environment:
-      - VIRTUAL_HOST=cadvisor.$DOMAIN_NAME
-      - LETSENCRYPT_HOST=cadvisor.$DOMAIN_NAME
-      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
-    command: '--detach=true'
-
-  prometheus-container:
-    container_name: prometheus-container
-    image: 'ubuntu/prometheus:2.33-22.04_beta'
-    environment:
-      - TZ=UTC
-    ports:
-      - '30090:9090'
-
-  glances:
-    image: 'nicolargo/glances:latest'
-    environment:
-      - GLANCES_OPT="-w"
-    volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock:ro'
-    ports:
-      - '61208-61209:61208-61209'
-    restart: 'always'
+      - /data/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - /data/caddy/data:/data
+      - /data/caddy/config:/config
+    networks:
+      - web
+      - internal
 
 
 volumes:
-  certs:
-  vhost.d:
-  html:
   portainer_data:
 
 
 networks:
-  proxy-tier:
+  web:
+    external: true
+  internal:
+    external: false
+    driver: bridge
