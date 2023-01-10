@@ -37,7 +37,7 @@ services:
       - PGID=999
 
   caddy:
-    image: caddy:<version>
+    image: caddy:2.6.2
     restart: unless-stopped
     ports:
       - "80:80"
