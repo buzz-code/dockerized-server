@@ -30,33 +30,32 @@ services:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    environment:
-      - url=https://monitor.yoman.online
+    labels:
+      caddy: monitor.$DOMAIN_NAME
+      caddy.reverse_proxy: "{{upstreams https 19999}}"
     networks:
-      - internal
+      - caddy
 
   caddy:
-    image: caddy:2.6.2
+    image: lucaslorentz/caddy-docker-proxy:ci-alpine
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
+    environment:
+      - CADDY_INGRESS_NETWORKS=caddy
     volumes:
-      - /data/caddy/Caddyfile:/etc/caddy/Caddyfile
-      - /data/caddy/data:/data
-      - /data/caddy/config:/config
+      - /var/run/docker.sock:/var/run/docker.sock
+      - caddy_data:/data
     networks:
-      - web
-      - internal
+      - caddy
 
 
 volumes:
   portainer_data:
+  caddy_data: {}
 
 
 networks:
-  web:
+  caddy:
     external: true
-  internal:
-    external: false
-    driver: bridge
