@@ -17,7 +17,7 @@ services:
       - '9443:9443'
     labels:
       caddy: docker.$DOMAIN_NAME
-      caddy.reverse_proxy: "{{upstreams https 9000}}"
+      caddy.reverse_proxy: "{{upstreams 9000}}"
     networks:
       - caddy
 
@@ -37,7 +37,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
       caddy: monitor.$DOMAIN_NAME
-      caddy.reverse_proxy: "{{upstreams https 19999}}"
+      caddy.reverse_proxy: "{{upstreams 19999}}"
     networks:
       - caddy
 
