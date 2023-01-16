@@ -18,6 +18,8 @@ services:
     labels:
       caddy: docker.$DOMAIN_NAME
       caddy.reverse_proxy: "{{upstreams https 9443}}"
+    networks:
+      - caddy
 
   netdata:
     image: firehol/netdata
