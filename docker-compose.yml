@@ -50,7 +50,7 @@ services:
       - caddy_data:/data
     labels:
       caddy: $DOMAIN_NAME, www.$DOMAIN_NAME
-      caddy.respond: "'Hello World' 200"
+      caddy.respond: '"Hello World" 200'
     networks:
       - caddy
 
