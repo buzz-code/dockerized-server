@@ -43,6 +43,7 @@ services:
 
   caddy:
     image: lucaslorentz/caddy-docker-proxy:2.8.1-alpine
+    container_name: caddy
     restart: unless-stopped
     ports:
       - 80:80
