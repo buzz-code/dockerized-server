@@ -17,6 +17,8 @@ services:
       caddy.reverse_proxy: "{{upstreams 9000}}"
     networks:
       - caddy
+    ports:
+      - '9443:9443'
 
   netdata:
     image: firehol/netdata
