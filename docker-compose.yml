@@ -18,7 +18,6 @@ services:
     labels:
       caddy: docker.$DOMAIN_NAME
       caddy.reverse_proxy: "{{upstreams 9000}}"
-      caddy.tls: "internal"
     networks:
       - caddy
 
