@@ -12,9 +12,6 @@ services:
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - 'portainer_data:/data'
-    ports:
-      - '9000:9000'
-      - '9443:9443'
     labels:
       caddy: docker.$DOMAIN_NAME
       caddy.reverse_proxy: "{{upstreams 9000}}"
@@ -25,8 +22,6 @@ services:
     image: firehol/netdata
     container_name: netdata
     hostname: monitor.$DOMAIN_NAME
-    ports:
-      - 19999:19999
     cap_add:
       - SYS_PTRACE
     security_opt:
@@ -53,6 +48,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - caddy_data:/data
+    labels:
+      caddy: $DOMAIN_NAME, www.$DOMAIN_NAME
+      caddy.respond: "'Hello World' 200"
     networks:
       - caddy
 
