@@ -56,6 +56,14 @@ services:
     networks:
       - caddy
 
+  elk:
+    image: sebp/elk
+    container_name: elk
+    ports:
+      - '5601:5601'
+      - '9200:9200'
+      - '5044:5044'
+
 
 volumes:
   portainer_data:
