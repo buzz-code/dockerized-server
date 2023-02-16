@@ -1,0 +1,32 @@
+version: "2.1"
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    volumes:
+      - /root/code-server/config:/config
+      - /root/code-server/git:/git
+      - /root/code-server/certs:/certs
+      - /root:/root
+    ports:
+      - 8443:8443
+      - 7443:443
+    restart: unless-stopped
+    environment:
+      - PASSWORD=codeAdmin
+      - SUDO_PASSWORD=codeAdmin
+      - DOCKER_MODS=linuxserver/mods:code-server-nodejs
+      - SSL_CERT_PATH=/root/code-server/certs/code-server+3.pem
+      - SSL_KEY_PATH=/root/code-server/certs/code-server+3-key.pem
+    labels:
+      caddy: code.yoman.online
+      caddy.reverse_proxy: "{{upstreams 8443}}"
+    networks:
+      - caddy
+      
+
+
+networks:
+  caddy:
+    external: true
+

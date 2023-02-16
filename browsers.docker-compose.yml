@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+    tor-browser:
+        ports:
+            - '6901:6901'
+        environment:
+            - VNC_PW=password
+        image: 'kasmweb/tor-browser:1.12.0'
+
+    brave:
+        ports:
+            - '6902:6901'
+        environment:
+            - VNC_PW=password
+        image: 'kasmweb/brave:1.12.0'
+
+    chrome:
+        ports:
+            - '6903:6901'
+        environment:
+            - VNC_PW=password
+        image: 'kasmweb/chrome:1.12.0'
