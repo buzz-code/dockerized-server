@@ -46,7 +46,7 @@ services:
       - 80:80
       - 443:443
     environment:
-      - CADDY_INGRESS_NETWORKS=caddy2
+      - CADDY_INGRESS_NETWORKS=caddy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - caddy_data:/data
@@ -54,7 +54,7 @@ services:
       caddy: $DOMAIN_NAME, www.$DOMAIN_NAME
       caddy.respond: '"Hello World" 200'
     networks:
-      - caddy2
+      - caddy
 
   elk:
     image: sebp/elk
@@ -82,6 +82,4 @@ volumes:
 
 networks:
   caddy:
-    external: true
-  caddy2:
     external: true
