@@ -1,26 +1,37 @@
-filebeat.inputs:
-  - type: log
-    paths:
-      - '/var/lib/docker/containers/*/*.log'
-    json.message_key: log
-    json.keys_under_root: true
-    processors:
-      - add_docker_metadata: ~
-    modules:
-      path: ${path.config}/modules.d/*.yml
-      reload.enabled: false
+# filebeat.inputs:
+#   - type: log
+#     paths:
+#       - '/var/lib/docker/containers/*/*.log'
+#     json.message_key: log
+#     json.keys_under_root: true
+#     processors:
+#       - add_docker_metadata: ~
 
-output.elasticsearch:
-  hosts: ["docker-elk-elasticsearch-1:9200"]
-  username: '${ELASTICSEARCH_USERNAME:elastic}'
-  password: '${ELASTICSEARCH_PASSWORD:changeme}'
+# output.elasticsearch:
+#   hosts: ["docker-elk-elasticsearch-1:9200"]
+#   username: '${ELASTICSEARCH_USERNAME:elastic}'
+#   password: '${ELASTICSEARCH_PASSWORD:changeme}'
 
-# filebeat.config:
-#   modules:
-#     path: ${path.config}/modules.d/*.yml
-#     reload.enabled: false
 
-filebeat.autodiscover:
+
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml # enable all modules (nginx, kafka, redis, etc)
+    reload.enabled: false
+
+filebeat.autodiscover: # auto-discover tagged docker container
   providers:
     - type: docker
       hints.enabled: true
+
+setup:
+  kibana.host: "http://docker-elk-kibana-1:5601"
+  dashboards.enable: true
+
+processors:
+  - add_docker_metadata: ~ # add docker metadata (container id, name, image and labels)
+
+output.elasticsearch:
+  hosts: 'http://localhost:9200'
+  username: 'elastic'
+  password: 'changeme'
