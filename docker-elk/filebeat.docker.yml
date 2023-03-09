@@ -8,7 +8,7 @@ filebeat.inputs:
       - add_docker_metadata: ~
 
 output.elasticsearch:
-  hosts: ["localhost:9200"]
+  hosts: ["docker-elk-elasticsearch-1:9200"]
 
 # filebeat.config:
 #   modules:
