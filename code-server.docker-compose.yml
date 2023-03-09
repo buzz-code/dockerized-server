@@ -12,6 +12,9 @@ services:
       - 8443:8443
       - 7443:443
     restart: unless-stopped
+    mem_limit: 512m
+    mem_reservation: 128M
+    cpus: 0.5
     environment:
       - PASSWORD=codeAdmin
       - SUDO_PASSWORD=codeAdmin
