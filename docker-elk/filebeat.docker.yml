@@ -9,6 +9,8 @@ filebeat.inputs:
 
 output.elasticsearch:
   hosts: ["docker-elk-elasticsearch-1:9200"]
+  username: '${ELASTICSEARCH_USERNAME:elastic}'
+  password: '${ELASTICSEARCH_PASSWORD:changeme}'
 
 # filebeat.config:
 #   modules:
