@@ -32,6 +32,6 @@ processors:
   - add_docker_metadata: ~ # add docker metadata (container id, name, image and labels)
 
 output.elasticsearch:
-  hosts: 'http://localhost:9200'
+  hosts: 'http://docker-elk-elasticsearch-1:9200'
   username: 'elastic'
   password: 'changeme'
