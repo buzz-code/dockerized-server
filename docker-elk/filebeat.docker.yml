@@ -1,0 +1,21 @@
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      hints.enabled: true
+
+filebeat.inputs:
+  - type: log
+    paths:
+      - '/var/lib/docker/containers/*/*.log'
+    json.message_key: log
+    json.keys_under_root: true
+    processors:
+      - add_docker_metadata: ~
+
+output.elasticsearch:
+  hosts: ["localhost:9200"]
+
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false

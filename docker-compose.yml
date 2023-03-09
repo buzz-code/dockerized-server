@@ -74,6 +74,12 @@ services:
     - LOGSTASH_PORT=5044
     - SHIPPER_NAME=aWonderfulName
 
+  my-filebeat:
+    container_name: my-filebeat
+    image: 'docker.elastic.co/beats/filebeat:7.4.2'
+    volumes:
+      - '/docker-elk/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml'
+
 
 volumes:
   portainer_data:
