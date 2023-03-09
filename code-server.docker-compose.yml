@@ -23,10 +23,13 @@ services:
       caddy.reverse_proxy: "{{upstreams 8443}}"
     networks:
       - caddy
+      - elknet
       
 
 
 networks:
   caddy:
+    external: true
+  elknet:
     external: true
 
