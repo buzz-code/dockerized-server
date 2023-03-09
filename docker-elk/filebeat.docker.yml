@@ -6,6 +6,9 @@ filebeat.inputs:
     json.keys_under_root: true
     processors:
       - add_docker_metadata: ~
+    modules:
+      path: ${path.config}/modules.d/*.yml
+      reload.enabled: false
 
 output.elasticsearch:
   hosts: ["docker-elk-elasticsearch-1:9200"]
