@@ -78,7 +78,7 @@ services:
     container_name: my-filebeat
     image: 'docker.elastic.co/beats/filebeat:7.4.2'
     volumes:
-      - '$(pwd)/docker-elk/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml'
+      - './docker-elk/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml'
 
 
 volumes:
