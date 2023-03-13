@@ -27,10 +27,5 @@ services:
     volumes:
       - '/opt/postal/config/Caddyfile:/etc/caddy/Caddyfile'
       - '/opt/postal/caddy-data:/data'
-    networks:
-      - host
+    network_mode: 'host'
     restart: always
-
-networks:
-  host:
-    external: true
