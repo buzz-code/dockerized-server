@@ -29,3 +29,4 @@ services:
       - '/opt/postal/caddy-data:/data'
     network_mode: 'host'
     restart: always
+
