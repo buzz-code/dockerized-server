@@ -30,3 +30,7 @@ services:
     networks:
       - host
     restart: always
+
+networks:
+  host:
+    external: true
