@@ -1,0 +1,32 @@
+version: '3'
+services:
+  postal-mariadb:
+    container_name: postal-mariadb
+    image: mariadb
+    environment:
+      - MARIADB_DATABASE=postal
+      - MARIADB_ROOT_PASSWORD=postal
+    ports:
+      - '127.0.0.1:3306:3306'
+    restart: always
+
+  postal-rabbitmq:
+    container_name: postal-rabbitmq
+    image: 'rabbitmq:3.8'
+    environment:
+      - RABBITMQ_DEFAULT_USER=postal
+      - RABBITMQ_DEFAULT_PASS=postal
+      - RABBITMQ_DEFAULT_VHOST=postal
+    ports:
+      - '127.0.0.1:5672:5672'
+    restart: always
+
+  postal-caddy:
+    container_name: postal-caddy
+    image: caddy
+    volumes:
+      - '/opt/postal/config/Caddyfile:/etc/caddy/Caddyfile'
+      - '/opt/postal/caddy-data:/data'
+    networks:
+      - host
+    restart: always
