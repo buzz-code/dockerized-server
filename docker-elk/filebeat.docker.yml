@@ -34,4 +34,4 @@ processors:
 output.elasticsearch:
   hosts: 'http://docker-elk-elasticsearch-1:9200'
   username: 'elastic'
-  password: 'changeme'
+  password: 'NigEVfhBpEbw4Kt'
