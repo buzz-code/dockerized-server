@@ -2,30 +2,51 @@ version: '3.3'
 
 services:
   netdata:
-    extends:
-      file: docker-compose.yml
-      service: netdata
-    container_name: 
+    image: firehol/netdata
+    hostname: monitor.$DOMAIN_NAME
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     deploy:
       labels:
         caddy: monitor.$DOMAIN_NAME
         caddy.reverse_proxy: "{{upstreams 19999}}"
+    networks:
+      - caddy
 
   caddy:
-    extends:
-      file: docker-compose.yml
-      service: caddy
-    container_name: 
-    deploy:
-      labels:
-        caddy: $DOMAIN_NAME, www.$DOMAIN_NAME
-        caddy.respond: '"Hello World" 200'
+    image: lucaslorentz/caddy-docker-proxy:2.8.3-alpine
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - CADDY_INGRESS_NETWORKS=caddy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - caddy_data:/data
+    # deploy:
+    #   labels:
+    #     caddy: $DOMAIN_NAME, www.$DOMAIN_NAME
+    #     caddy.respond: '"Hello World" 200'
+    networks:
+      - caddy
 
   filebeat:
-    extends:
-      file: docker-compose.yml
-      service: netdata
-    container_name: 
+    image: 'docker.elastic.co/beats/filebeat:7.4.2'
+    restart: unless-stopped
+    volumes:
+      - './docker-elk/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro'
+      - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+    user: root
+    networks:
+      - elknet
 
 
 volumes:
