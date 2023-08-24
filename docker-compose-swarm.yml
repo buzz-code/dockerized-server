@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   netdata:
-    image: firehol/netdata
+    image: firehol/netdata:latest
     hostname: monitor.$DOMAIN_NAME
     cap_add:
       - SYS_PTRACE
