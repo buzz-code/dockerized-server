@@ -1,0 +1,39 @@
+version: '3.3'
+
+services:
+  netdata:
+    extends:
+      file: docker-compose.yml
+      service: netdata
+    container_name: 
+    deploy:
+      labels:
+        caddy: monitor.$DOMAIN_NAME
+        caddy.reverse_proxy: "{{upstreams 19999}}"
+
+  caddy:
+    extends:
+      file: docker-compose.yml
+      service: caddy
+    container_name: 
+    deploy:
+      labels:
+        caddy: $DOMAIN_NAME, www.$DOMAIN_NAME
+        caddy.respond: '"Hello World" 200'
+
+  filebeat:
+    extends:
+      file: docker-compose.yml
+      service: netdata
+    container_name: 
+
+
+volumes:
+  caddy_data: {}
+
+
+networks:
+  caddy:
+    external: true
+  elknet:
+    external: true
