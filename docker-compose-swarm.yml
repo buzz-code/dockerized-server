@@ -48,6 +48,22 @@ services:
   #   networks:
   #     - elknet
 
+  elk:
+    image: sebp/elk
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
+    environment:
+      - ELASTICSEARCH_USER=$ELASTICSEARCH_USER
+      - ELASTICSEARCH_PASSWORD=$ELASTICSEARCH_PASSWORD
+      - LOGSTASH_USER=$LOGSTASH_USER
+      - LOGSTASH_PASSWORD=$LOGSTASH_PASSWORD
+      - KIBANA_USER=$KIBANA_USER
+      - KIBANA_PASSWORD=$KIBANA_PASSWORD
+    networks:
+        - elknet
+
 
 volumes:
   caddy_data: {}
