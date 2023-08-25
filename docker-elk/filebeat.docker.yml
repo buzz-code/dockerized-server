@@ -25,13 +25,13 @@ filebeat.autodiscover: # auto-discover tagged docker container
       hints.enabled: true
 
 setup:
-  kibana.host: "http://docker-elk-kibana-1:5601"
+  kibana.host: '${KIBANA_URL:http://docker-elk-kibana-1:5601}'
   dashboards.enable: true
 
 processors:
   - add_docker_metadata: ~ # add docker metadata (container id, name, image and labels)
 
 output.elasticsearch:
-  hosts: 'http://docker-elk-elasticsearch-1:9200'
-  username: 'elastic'
-  password: 'NigEVfhBpEbw4Kt'
+  hosts: '${ELASTICSEARCH_URL:http://docker-elk-elasticsearch-1:9200}'
+  username: '${ELASTICSEARCH_USERNAME:elastic}'
+  password: '${ELASTICSEARCH_PASSWORD:NigEVfhBpEbw4Kt}'

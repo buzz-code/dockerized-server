@@ -48,7 +48,12 @@ services:
   #     - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
   #     - '/var/run/docker.sock:/var/run/docker.sock:ro'
   #   user: root
-  #   networks:
+  #     environment:
+  #     - ELASTICSEARCH_USER=$ELASTICSEARCH_USER
+  #     - ELASTICSEARCH_PASSWORD=$ELASTICSEARCH_PASSWORD
+  #     - ELASTICSEARCH_URL=$ELASTICSEARCH_URL
+  #     - KIBANA_URL=$KIBANA_URL
+  #    networks:
   #     - elknet
 
   elk:
