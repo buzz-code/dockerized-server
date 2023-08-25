@@ -54,6 +54,10 @@ services:
       - "5601:5601"
       - "9200:9200"
       - "5044:5044"
+    deploy:
+      placement:
+        constraints:
+            - node.labels.elk == true
     environment:
       - ELASTICSEARCH_USER=$ELASTICSEARCH_USER
       - ELASTICSEARCH_PASSWORD=$ELASTICSEARCH_PASSWORD
