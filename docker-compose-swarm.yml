@@ -80,7 +80,7 @@ services:
       - LOGSTASH_PASSWORD=$LOGSTASH_PASSWORD
       - KIBANA_USER=$KIBANA_USER
       - KIBANA_PASSWORD=$KIBANA_PASSWORD
-      - ES_JAVA_OPTS="-Xmx256m -Xms256m"
+      # - ES_JAVA_OPTS="-Xmx256m -Xms256m"
     networks:
         - elknet
 
