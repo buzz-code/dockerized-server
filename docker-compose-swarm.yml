@@ -41,7 +41,7 @@ services:
       - caddy
 
   filebeat:
-    image: elastic/filebeat
+    image: elastic/filebeat:8.9.1
     restart: unless-stopped
     volumes:
       - '/root/dockerized-server/docker-elk/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro'
@@ -61,7 +61,7 @@ services:
     - elknet
 
   elk:
-    image: sebp/elk
+    image: sebp/elk:8.9.1
     ports:
       - "5601:5601"
     #   - "9200:9200"
