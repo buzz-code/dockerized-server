@@ -33,7 +33,10 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - caddy_data:/data
-    # deploy:
+    deploy:
+      placement:
+        constraints:
+            - node.labels.elk == true
     #   labels:
     #     caddy: $DOMAIN_NAME, www.$DOMAIN_NAME
     #     caddy.respond: '"Hello World" 200'
