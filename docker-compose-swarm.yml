@@ -36,7 +36,7 @@ services:
     deploy:
       placement:
         constraints:
-            - node.labels.elk == true
+          - "node.role == manager"
     #   labels:
     #     caddy: $DOMAIN_NAME, www.$DOMAIN_NAME
     #     caddy.respond: '"Hello World" 200'
