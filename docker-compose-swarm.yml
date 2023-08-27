@@ -67,7 +67,7 @@ services:
     #   - "9200:9200"
     #   - "5044:5044"
     volumes:
-      - elk-data:/var/lib/elasticsearch
+      - elk_data:/var/lib/elasticsearch
     deploy:
       placement:
         constraints:
