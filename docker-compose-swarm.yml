@@ -49,9 +49,7 @@ services:
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
     user: root
     deploy:
-      placement:
-        constraints:
-            - node.labels.elk == true
+      mode: global
     environment:
     - ELASTICSEARCH_USER=$ELASTICSEARCH_USER
     - ELASTICSEARCH_PASSWORD=$ELASTICSEARCH_PASSWORD
