@@ -70,7 +70,7 @@ services:
     volumes:
       - elk_data:/var/lib/elasticsearch
     configs:
-      - source: elasticsearch_config
+      - source: kqufq8wpsa4ggg5rpvt826d94
         target: /etc/elasticsearch/elasticsearch.yml
     deploy:
       placement:
