@@ -59,7 +59,7 @@ services:
     - ELASTICSEARCH_URL=$ELASTICSEARCH_URL
     - KIBANA_URL=$KIBANA_URL
     networks:
-    - elknet
+      - elknet
 
   elk:
     image: sebp/elk:8.9.1
@@ -86,7 +86,8 @@ services:
       - LOGSTASH_START=0
       # - ES_JAVA_OPTS="-Xmx256m -Xms256m"
     networks:
-        - elknet
+      - caddy
+      - elknet
 
 
 volumes:
