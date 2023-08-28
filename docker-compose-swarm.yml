@@ -84,6 +84,7 @@ services:
       - KIBANA_USER=$KIBANA_USER
       - KIBANA_PASSWORD=$KIBANA_PASSWORD
       - LOGSTASH_START=0
+      - XPACK_SECURITY_ENABLED=true
       # - ES_JAVA_OPTS="-Xmx256m -Xms256m"
     networks:
       - caddy
