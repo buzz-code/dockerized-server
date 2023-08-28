@@ -31,7 +31,7 @@ services:
       placement:
         constraints: [node.role == manager]
       labels:
-        caddy: docker2.$DOMAIN_NAME
+        caddy: docker2.yoman.online
         caddy.reverse_proxy: "{{upstreams 9000}}"
 
 
