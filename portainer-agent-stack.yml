@@ -24,16 +24,23 @@ services:
       - portainer_data:/data
     networks:
       - agent_network
+      - caddy
     deploy:
       mode: replicated
       replicas: 1
       placement:
         constraints: [node.role == manager]
+      labels:
+        caddy: docker2.$DOMAIN_NAME
+        caddy.reverse_proxy: "{{upstreams 9000}}"
+
 
 networks:
   agent_network:
     driver: overlay
     attachable: true
+  caddy:
+    external: true
 
 volumes:
   portainer_data:
