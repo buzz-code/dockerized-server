@@ -56,53 +56,56 @@ services:
     environment:
     - ELASTICSEARCH_USER=$ELASTICSEARCH_USER
     - ELASTICSEARCH_PASSWORD=$ELASTICSEARCH_PASSWORD
-    - ELASTICSEARCH_URL=$ELASTICSEARCH_URL
-    - KIBANA_URL=$KIBANA_URL
+    - ELASTICSEARCH_URL=http://elasticsearch:9200
+    - KIBANA_URL=http://kibana:5601
     networks:
       - elknet
+      - elk_elk
 
-  elk:
-    image: sebp/elk:8.9.1
-    ports:
-      - "5601:5601"
-    #   - "9200:9200"
-    #   - "5044:5044"
-    volumes:
-      - elk_data:/var/lib/elasticsearch
-    # configs:
-    #   - source: elasticsearch_config
-    #     target: /etc/elasticsearch/elasticsearch.yml
-    deploy:
-      placement:
-        constraints:
-            - node.labels.elk == true
-      labels:
-        caddy: kibana.$DOMAIN_NAME
-        caddy.reverse_proxy: "{{upstreams 5601}}"
-    environment:
-      - ELASTICSEARCH_USER=$ELASTICSEARCH_USER
-      - ELASTICSEARCH_PASSWORD=$ELASTICSEARCH_PASSWORD
-      - LOGSTASH_USER=$LOGSTASH_USER
-      - LOGSTASH_PASSWORD=$LOGSTASH_PASSWORD
-      - KIBANA_USER=$KIBANA_USER
-      - KIBANA_PASSWORD=$KIBANA_PASSWORD
-      - LOGSTASH_START=0
-      - XPACK_SECURITY_ENABLED=true
-      - xpack.security.enabled=true
-      - server.publicBaseUrl=kibana.$DOMAIN_NAME
-      # - ES_JAVA_OPTS="-Xmx256m -Xms256m"
-    networks:
-      - caddy
-      - elknet
+  # elk:
+  #   image: sebp/elk:8.9.1
+  #   ports:
+  #     - "5601:5601"
+  #   #   - "9200:9200"
+  #   #   - "5044:5044"
+  #   volumes:
+  #     - elk_data:/var/lib/elasticsearch
+  #   # configs:
+  #   #   - source: elasticsearch_config
+  #   #     target: /etc/elasticsearch/elasticsearch.yml
+  #   deploy:
+  #     placement:
+  #       constraints:
+  #           - node.labels.elk == true
+  #     labels:
+  #       caddy: kibana.$DOMAIN_NAME
+  #       caddy.reverse_proxy: "{{upstreams 5601}}"
+  #   environment:
+  #     - ELASTICSEARCH_USER=$ELASTICSEARCH_USER
+  #     - ELASTICSEARCH_PASSWORD=$ELASTICSEARCH_PASSWORD
+  #     - LOGSTASH_USER=$LOGSTASH_USER
+  #     - LOGSTASH_PASSWORD=$LOGSTASH_PASSWORD
+  #     - KIBANA_USER=$KIBANA_USER
+  #     - KIBANA_PASSWORD=$KIBANA_PASSWORD
+  #     - LOGSTASH_START=0
+  #     - XPACK_SECURITY_ENABLED=true
+  #     - xpack.security.enabled=true
+  #     - server.publicBaseUrl=kibana.$DOMAIN_NAME
+  #     # - ES_JAVA_OPTS="-Xmx256m -Xms256m"
+  #   networks:
+  #     - caddy
+  #     - elknet
 
 
 volumes:
   caddy_data: {}
-  elk_data: {}
+  # elk_data: {}
 
 
 networks:
   caddy:
     external: true
   elknet:
+    external: true
+  elk_elk:
     external: true
