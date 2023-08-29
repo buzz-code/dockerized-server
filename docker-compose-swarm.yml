@@ -44,7 +44,7 @@ services:
       - caddy
 
   filebeat:
-    image: elastic/filebeat:8.9.1
+    image: elastic/filebeat:7.17.0
     restart: unless-stopped
     volumes:
       - '/root/dockerized-server/docker-elk/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro'
