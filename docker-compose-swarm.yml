@@ -2,25 +2,30 @@ version: '3.3'
 
 services:
   netdata:
-    image: netdata/netdata:latest
-    hostname: monitor.$DOMAIN_NAME
+    image: netdata/netdata:edge
+    ports:
+      - 19999:19999
+    restart: unless-stopped
     cap_add:
       - SYS_PTRACE
     security_opt:
       - apparmor:unconfined
     volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /etc/hostname:/etc/hostname:ro
+    environment:
+      - NETDATA_CLAIM_TOKEN=$NETDATA_CLAIM_TOKEN
+      - NETDATA_CLAIM_URL=$NETDATA_CLAIM_URL
+      - NETDATA_CLAIM_ROOMS=$NETDATA_CLAIM_ROOMS
     deploy:
-      placement:
-        constraints:
-          - "node.role == manager"
-      labels:
-        caddy: monitor.$DOMAIN_NAME
-        caddy.reverse_proxy: "{{upstreams 19999}}"
-    networks:
-      - caddy
+      mode: global
 
   caddy:
     image: lucaslorentz/caddy-docker-proxy:2.8.3-alpine
@@ -100,6 +105,9 @@ services:
 volumes:
   caddy_data: {}
   # elk_data: {}
+  netdataconfig:
+  netdatalib:
+  netdatacache:
 
 
 networks:
