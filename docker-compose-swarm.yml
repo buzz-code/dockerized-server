@@ -3,6 +3,7 @@ version: '3.3'
 services:
   netdata:
     image: netdata/netdata:edge
+    hostname: "{{.Node.Hostname}}"
     ports:
       - 19999:19999
     restart: unless-stopped
