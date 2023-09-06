@@ -120,7 +120,7 @@ networks:
     external: true
 
 configs:
-  caddy-basic-content:
+  caddy-basic-content2:
     file: ./Caddyfile
     labels:
       caddy:
