@@ -118,3 +118,9 @@ networks:
     external: true
   elk_elk:
     external: true
+
+configs:
+  caddy-basic-content:
+    file: ./Caddyfile
+    labels:
+      caddy:

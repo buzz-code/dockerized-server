@@ -1,0 +1,6 @@
+api.dev.demo.yoman.online {
+	reverse_proxy 49.13.65.118:30003
+}
+dev.demo.yoman.online {
+	reverse_proxy 49.13.65.118:30004
+}
