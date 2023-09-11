@@ -27,8 +27,8 @@ services:
       - NETDATA_CLAIM_ROOMS=$NETDATA_CLAIM_ROOMS
     deploy:
       mode: global
-      placement:
-        constraints: [node.labels.codeserver != true]
+      # placement:
+      #   constraints: [node.labels.codeserver != true]
 
   caddy:
     image: lucaslorentz/caddy-docker-proxy:2.8.3-alpine
@@ -61,8 +61,8 @@ services:
     user: root
     deploy:
       mode: global
-      placement:
-        constraints: [node.labels.codeserver != true]
+      # placement:
+      #   constraints: [node.labels.codeserver != true]
     environment:
     - ELASTICSEARCH_USER=$ELASTICSEARCH_USER
     - ELASTICSEARCH_PASSWORD=$ELASTICSEARCH_PASSWORD
