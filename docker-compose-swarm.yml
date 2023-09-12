@@ -124,7 +124,7 @@ networks:
     external: true
 
 configs:
-  caddy-basic-content2:
+  caddy-basic-content3:
     file: ./Caddyfile
     labels:
       caddy:
