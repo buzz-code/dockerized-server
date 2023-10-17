@@ -27,6 +27,10 @@ services:
       - NETDATA_CLAIM_ROOMS=$NETDATA_CLAIM_ROOMS
     deploy:
       mode: global
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 500m
       # placement:
       #   constraints: [node.labels.codeserver != true]
 
