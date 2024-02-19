@@ -67,7 +67,7 @@ services:
       - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
     configs:
-      - source: filebeat-config12
+      - source: filebeat-config13
         target: /usr/share/filebeat/filebeat.yml
     labels:
       co.elastic.logs/enabled: 'true'
@@ -143,5 +143,5 @@ configs:
     file: ./Caddyfile
     labels:
       caddy:
-  filebeat-config12:
+  filebeat-config13:
     file: ./docker-elk/filebeat.docker.yml
