@@ -22,9 +22,14 @@ filebeat.config:
 filebeat.autodiscover: # auto-discover tagged docker container
   providers:
     - type: docker
-      hints.enabled: true
-      hints.default_config.enabled: false
-
+      hints:
+        enabled: true
+        default_config:
+          enabled: false
+          type: container
+          paths:
+            - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
+ 
 setup:
   kibana.host: '${KIBANA_URL:http://docker-elk-kibana-1:5601}'
   dashboards.enable: true
