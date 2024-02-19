@@ -59,9 +59,12 @@ services:
     image: elastic/filebeat:7.17.0
     restart: unless-stopped
     volumes:
-      - '/root/dockerized-server/docker-elk/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro'
+      # - '/root/dockerized-server/docker-elk/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro'
       - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
+    configs:
+      - source: filebeat-config
+        target: /usr/share/filebeat/filebeat.yml
     user: root
     deploy:
       mode: global
@@ -132,3 +135,5 @@ configs:
     file: ./Caddyfile
     labels:
       caddy:
+  filebeat-config:
+    file: ./docker-elk/filebeat.docker.yml
