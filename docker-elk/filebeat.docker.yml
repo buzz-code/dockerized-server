@@ -31,12 +31,12 @@ setup:
 
 processors:
   - add_docker_metadata: ~ # add docker metadata (container id, name, image and labels)
-  # # decode the log field (sub JSON document) if JSON encoded, then maps it's fields to elasticsearch fields
-  # - decode_json_fields:
-  #     fields: ["log", "message"]
-  #     target: ""
-  #     # overwrite existing target elasticsearch fields while decoding json fields
-  #     overwrite_keys: true
+  # decode the log field (sub JSON document) if JSON encoded, then maps it's fields to elasticsearch fields
+  - decode_json_fields:
+      fields: ["log", "message"]
+      target: ""
+      # overwrite existing target elasticsearch fields while decoding json fields
+      overwrite_keys: true
 
 output.elasticsearch:
   hosts: '${ELASTICSEARCH_URL:http://docker-elk-elasticsearch-1:9200}'
