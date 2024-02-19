@@ -27,9 +27,9 @@ filebeat.autodiscover: # auto-discover tagged docker container
         enabled: true
         default_config: 
           enabled: false
-          type: container
-          paths:
-            - /var/lib/docker/containers/${data.container.id}/*.log
+          # type: container
+          # paths:
+          #   - /var/lib/docker/containers/${data.container.id}/*.log
 
 setup:
   kibana.host: '${KIBANA_URL:http://docker-elk-kibana-1:5601}'
@@ -37,10 +37,12 @@ setup:
 
 processors:
   - add_docker_metadata: ~ # add docker metadata (container id, name, image and labels)
-  # - decode_json_fields:
-  #     fields: ["message"]
-  #     add_error_key: true
-  #     expand_keys: true
+  # decode the log field (sub JSON document) if JSON encoded, then maps it's fields to elasticsearch fields
+  - decode_json_fields:
+      fields: ["log", "message"]
+      target: ""
+      # overwrite existing target elasticsearch fields while decoding json fields
+      overwrite_keys: true
 
 output.elasticsearch:
   hosts: '${ELASTICSEARCH_URL:http://docker-elk-elasticsearch-1:9200}'
