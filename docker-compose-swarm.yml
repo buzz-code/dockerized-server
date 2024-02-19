@@ -25,6 +25,8 @@ services:
       - NETDATA_CLAIM_TOKEN=$NETDATA_CLAIM_TOKEN
       - NETDATA_CLAIM_URL=$NETDATA_CLAIM_URL
       - NETDATA_CLAIM_ROOMS=$NETDATA_CLAIM_ROOMS
+    labels:
+      co.elastic.logs/enabled: 'false'
     deploy:
       mode: global
       resources:
@@ -67,6 +69,8 @@ services:
     configs:
       - source: filebeat-config12
         target: /usr/share/filebeat/filebeat.yml
+    labels:
+      co.elastic.logs/enabled: 'true'
     user: root
     deploy:
       mode: global
