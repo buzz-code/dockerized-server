@@ -23,7 +23,7 @@ filebeat.autodiscover: # auto-discover tagged docker container
   providers:
     - type: docker
       hints.enabled: true
-      # hints.default_config.enabled: false
+      hints.default_config.enabled: false
 
 setup:
   kibana.host: '${KIBANA_URL:http://docker-elk-kibana-1:5601}'

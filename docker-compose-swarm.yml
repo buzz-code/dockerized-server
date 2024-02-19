@@ -63,7 +63,7 @@ services:
       - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
     configs:
-      - source: filebeat-config6
+      - source: filebeat-config7
         target: /usr/share/filebeat/filebeat.yml
     user: root
     deploy:
@@ -135,5 +135,5 @@ configs:
     file: ./Caddyfile
     labels:
       caddy:
-  filebeat-config6:
+  filebeat-config7:
     file: ./docker-elk/filebeat.docker.yml
