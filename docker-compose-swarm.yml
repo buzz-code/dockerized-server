@@ -31,8 +31,8 @@ services:
         limits:
           cpus: '0.50'
           memory: 500m
-      placement:
-        constraints: [node.labels.elk != true]
+      # placement:
+      #   constraints: [node.labels.elk != true]
 
   caddy:
     image: lucaslorentz/caddy-docker-proxy:2.8.3-alpine
