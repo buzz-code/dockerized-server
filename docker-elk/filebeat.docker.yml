@@ -26,7 +26,7 @@ filebeat.autodiscover: # auto-discover tagged docker container
         enabled: true
         default_config:
           enabled: false
-          type: container
+          type: filestream
           paths:
             - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
  
