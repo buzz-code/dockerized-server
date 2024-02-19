@@ -33,6 +33,8 @@ services:
           memory: 500m
       # placement:
       #   constraints: [node.labels.elk != true]
+      labels:
+        co.elastic.logs/enabled: 'false'
 
   caddy:
     image: lucaslorentz/caddy-docker-proxy:2.8.3-alpine
@@ -70,6 +72,8 @@ services:
       mode: global
       # placement:
       #   constraints: [node.labels.codeserver != true]
+      labels:
+        co.elastic.logs/enabled: 'true'
     environment:
     - ELASTICSEARCH_USER=$ELASTICSEARCH_USER
     - ELASTICSEARCH_PASSWORD=$ELASTICSEARCH_PASSWORD
