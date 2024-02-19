@@ -22,8 +22,6 @@ filebeat.config:
 filebeat.autodiscover: # auto-discover tagged docker container
   providers:
     - type: docker
-      node: ${NODE_NAME}
-    - type: docker
       hints.enabled: true
       hints.default_config.enabled: false
 
