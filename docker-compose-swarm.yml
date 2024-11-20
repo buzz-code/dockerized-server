@@ -61,31 +61,31 @@ services:
     networks:
       - caddy
 
-  filebeat:
-    image: elastic/filebeat:7.17.0
-    restart: unless-stopped
-    volumes:
-      # - '/root/dockerized-server/docker-elk/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro'
-      - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
-      - '/var/run/docker.sock:/var/run/docker.sock:ro'
-    configs:
-      - source: filebeat-config13
-        target: /usr/share/filebeat/filebeat.yml
-    labels:
-      co.elastic.logs/enabled: 'true'
-    user: root
-    deploy:
-      mode: global
-      # placement:
-      #   constraints: [node.labels.codeserver != true]
-    environment:
-    - ELASTICSEARCH_USER=$ELASTICSEARCH_USER
-    - ELASTICSEARCH_PASSWORD=$ELASTICSEARCH_PASSWORD
-    - ELASTICSEARCH_URL=http://elasticsearch:9200
-    - KIBANA_URL=http://kibana:5601
-    networks:
-      - elknet
-      - elk_elk
+  # filebeat:
+  #   image: elastic/filebeat:7.17.0
+  #   restart: unless-stopped
+  #   volumes:
+  #     # - '/root/dockerized-server/docker-elk/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro'
+  #     - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
+  #     - '/var/run/docker.sock:/var/run/docker.sock:ro'
+  #   configs:
+  #     - source: filebeat-config13
+  #       target: /usr/share/filebeat/filebeat.yml
+  #   labels:
+  #     co.elastic.logs/enabled: 'true'
+  #   user: root
+  #   deploy:
+  #     mode: global
+  #     # placement:
+  #     #   constraints: [node.labels.codeserver != true]
+  #   environment:
+  #   - ELASTICSEARCH_USER=$ELASTICSEARCH_USER
+  #   - ELASTICSEARCH_PASSWORD=$ELASTICSEARCH_PASSWORD
+  #   - ELASTICSEARCH_URL=http://elasticsearch:9200
+  #   - KIBANA_URL=http://kibana:5601
+  #   networks:
+  #     - elknet
+  #     - elk_elk
 
   filebeat-openobserve:
     image: elastic/filebeat:7.17.0
