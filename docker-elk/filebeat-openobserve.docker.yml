@@ -1,0 +1,50 @@
+# filebeat.inputs:
+#   - type: log
+#     paths:
+#       - '/var/lib/docker/containers/*/*.log'
+#     json.message_key: log
+#     json.keys_under_root: true
+#     processors:
+#       - add_docker_metadata: ~
+
+# output.elasticsearch:
+#   hosts: ["docker-elk-elasticsearch-1:9200"]
+#   username: '${ELASTICSEARCH_USERNAME:elastic}'
+#   password: '${ELASTICSEARCH_PASSWORD:changeme}'
+
+
+
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml # enable all modules (nginx, kafka, redis, etc)
+    reload.enabled: false
+
+filebeat.autodiscover: # auto-discover tagged docker container
+  providers:
+    - type: docker
+      hints:
+        enabled: true
+        default_config:
+          enabled: false
+        #   type: container
+        #   paths:
+        #     - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
+ 
+setup.ilm.enabled: false
+
+processors:
+  - add_docker_metadata: ~ # add docker metadata (container id, name, image and labels)
+  # decode the log field (sub JSON document) if JSON encoded, then maps it's fields to elasticsearch fields
+  - decode_json_fields:
+      fields: ["log", "message"]
+      target: "json"
+      # overwrite existing target elasticsearch fields while decoding json fields
+      overwrite_keys: true
+
+output.elasticsearch:
+  hosts: ["https://api.openobserve.ai:443"]
+  timeout: 10
+  path: '${OPENOBSERVE_PATH}'
+  index: default
+  username: '${OPENOBSERVE_USER}'
+  password: '${OPENOBSERVE_PASSWORD}'

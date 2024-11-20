@@ -87,6 +87,31 @@ services:
       - elknet
       - elk_elk
 
+  filebeat-openobserve:
+    image: elastic/filebeat:7.17.0
+    restart: unless-stopped
+    volumes:
+      # - '/root/dockerized-server/docker-elk/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro'
+      - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+    configs:
+      - source: filebeat-config14
+        target: /usr/share/filebeat/filebeat.yml
+    labels:
+      co.elastic.logs/enabled: 'true'
+    user: root
+    deploy:
+      mode: global
+      # placement:
+      #   constraints: [node.labels.codeserver != true]
+    environment:
+    - OPENOBSERVE_USER=$OPENOBSERVE_USER
+    - OPENOBSERVE_PASSWORD=$OPENOBSERVE_PASSWORD
+    - OPENOBSERVE_PATH=OPENOBSERVE_PATH
+    networks:
+      - elknet
+      - elk_elk
+
   # elk:
   #   image: sebp/elk:8.9.1
   #   ports:
@@ -145,3 +170,5 @@ configs:
       caddy:
   filebeat-config13:
     file: ./docker-elk/filebeat.docker.yml
+  filebeat-config14:
+    file: ./docker-elk/filebeat-openobserve.docker.yml
