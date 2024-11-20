@@ -31,6 +31,10 @@ filebeat.autodiscover: # auto-discover tagged docker container
         #     - "/var/lib/docker/containers/${data.docker.container.id}/*.log"
  
 setup.ilm.enabled: false
+setup.template.enabled: true
+setup.template.name: "nginx-log"
+setup.template.pattern: "nginx-log-*"
+setup.template.overwrite: true
 
 processors:
   - add_docker_metadata: ~ # add docker metadata (container id, name, image and labels)
