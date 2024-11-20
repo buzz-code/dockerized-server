@@ -52,3 +52,6 @@ output.elasticsearch:
   index: default
   username: '${OPENOBSERVE_USER}'
   password: '${OPENOBSERVE_PASSWORD}'
+
+filebeat.inputs.ignore_older: 72h
+filebeat.inputs.scan_frequency: 60s

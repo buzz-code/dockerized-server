@@ -95,7 +95,7 @@ services:
       - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
     configs:
-      - source: filebeat-config15
+      - source: filebeat-config16
         target: /usr/share/filebeat/filebeat.yml
     labels:
       co.elastic.logs/enabled: 'true'
@@ -170,5 +170,5 @@ configs:
       caddy:
   filebeat-config13:
     file: ./docker-elk/filebeat.docker.yml
-  filebeat-config15:
+  filebeat-config16:
     file: ./docker-elk/filebeat-openobserve.docker.yml
