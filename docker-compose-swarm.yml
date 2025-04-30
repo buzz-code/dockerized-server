@@ -16,7 +16,7 @@ services:
       - netdataconfig:/etc/netdata
       - netdatalib:/var/lib/netdata
       - netdatacache:/var/cache/netdata
-      - ./netdata/netdata.conf:/etc/netdata/netdata.conf:ro
+      - netdata_conf:/etc/netdata/netdata.conf:ro
       # - /:/host/root:ro,rslave
       - /etc/passwd:/host/etc/passwd:ro
       - /etc/group:/host/etc/group:ro
@@ -165,6 +165,8 @@ networks:
     external: true
 
 configs:
+  netdata_conf:
+    file: ./netdata/netdata.conf
   caddy-basic-content3:
     file: ./Caddyfile
     labels:
