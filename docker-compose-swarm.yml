@@ -10,8 +10,10 @@ services:
     cap_add:
       - SYS_PTRACE
       - SYS_ADMIN
+      - DAC_READ_SEARCH
     security_opt:
       - apparmor:unconfined
+      - seccomp:unconfined
     volumes:
       - netdataconfig:/etc/netdata
       - netdatalib:/var/lib/netdata
