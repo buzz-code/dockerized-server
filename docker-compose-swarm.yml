@@ -103,7 +103,7 @@ services:
       - source: filebeat-config16
         target: /usr/share/filebeat/filebeat.yml
     labels:
-      co.elastic.logs/enabled: 'false'
+      co.elastic.logs/enabled: 'true'
     user: root
     deploy:
       mode: global
