@@ -200,4 +200,4 @@ configs:
   filebeat-config16:
     file: ./docker-elk/filebeat-openobserve.docker.yml
   promtail-config:
-    file: ./promtail-config.yml
+    file: ./docker-elk/promtail-config.yml
