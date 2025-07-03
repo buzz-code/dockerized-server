@@ -17,6 +17,12 @@ scrape_configs:
       - host: unix:///var/run/docker.sock
         refresh_interval: 5s
     relabel_configs:
+      # Include only services with co.elastic.logs/enabled: 'true'
+      - source_labels: ['__meta_docker_container_label_co_elastic_logs_enabled']
+        regex: 'true'
+        action: keep
+      - source_labels: ['__meta_docker_container_label_com_docker_swarm_stack_name']
+        target_label: 'stack'
       - source_labels: ['__meta_docker_container_label_com_docker_swarm_service_name']
         target_label: 'service'
       - source_labels: ['__meta_docker_container_name']

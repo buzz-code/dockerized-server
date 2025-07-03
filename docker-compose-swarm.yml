@@ -124,7 +124,7 @@ services:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     configs:
-      - source: promtail-config
+      - source: promtail-config2
         target: /etc/promtail/config.yml
     command: 
       - -config.file=/etc/promtail/config.yml
@@ -200,5 +200,5 @@ configs:
     file: ./docker-elk/filebeat.docker.yml
   filebeat-config16:
     file: ./docker-elk/filebeat-openobserve.docker.yml
-  promtail-config:
+  promtail-config2:
     file: ./docker-elk/promtail-config.yml
