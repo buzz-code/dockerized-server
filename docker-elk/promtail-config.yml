@@ -17,6 +17,10 @@ scrape_configs:
       - host: unix:///var/run/docker.sock
         refresh_interval: 5s
     relabel_configs:
+      # Drop Promtail's own logs
+      - source_labels: ['__meta_docker_container_name']
+        regex: 'promtail' # Or the exact name of your promtail container if it's different
+        action: drop
       # Include only services with co.elastic.logs/enabled: 'true'
       - source_labels: ['__meta_docker_container_label_co_elastic_logs_enabled']
         regex: 'true'
