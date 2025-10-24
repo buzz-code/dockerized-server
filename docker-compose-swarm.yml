@@ -117,26 +117,26 @@ services:
       - elknet
       - elk_elk
 
-  promtail:
-    image: grafana/promtail:2.9.0
-    restart: unless-stopped
-    volumes:
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    configs:
-      - source: promtail-config3
-        target: /etc/promtail/config.yml
-    command: 
-      - -config.file=/etc/promtail/config.yml
-      - -config.expand-env=true
-    deploy:
-      mode: global
-    environment:
-      - LOKI_URL=$LOKI_URL
-      - LOKI_USERNAME=$LOKI_USERNAME
-      - LOKI_PASSWORD=$LOKI_PASSWORD
-    networks:
-      - elknet # Or any other network that can reach your Loki instance
+  # promtail:
+  #   image: grafana/promtail:2.9.0
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /var/lib/docker/containers:/var/lib/docker/containers:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #   configs:
+  #     - source: promtail-config3
+  #       target: /etc/promtail/config.yml
+  #   command: 
+  #     - -config.file=/etc/promtail/config.yml
+  #     - -config.expand-env=true
+  #   deploy:
+  #     mode: global
+  #   environment:
+  #     - LOKI_URL=$LOKI_URL
+  #     - LOKI_USERNAME=$LOKI_USERNAME
+  #     - LOKI_PASSWORD=$LOKI_PASSWORD
+  #   networks:
+  #     - elknet # Or any other network that can reach your Loki instance
 
   # elk:
   #   image: sebp/elk:8.9.1
