@@ -4,8 +4,8 @@ services:
   netdata:
     image: netdata/netdata:v2.7.3
     hostname: "{{.Node.Hostname}}"
-    ports:
-      - 19999:19999
+    # ports:
+    #   - 19999:19999
     restart: unless-stopped
     cap_add:
       - SYS_PTRACE
@@ -42,8 +42,8 @@ services:
         limits:
           cpus: '0.50'
           memory: 500m
-      # placement:
-      #   constraints: [node.labels.elk != true]
+      placement:
+        constraints: [node.labels.codeserver != true]
 
   caddy:
     image: lucaslorentz/caddy-docker-proxy:2.8.3-alpine
