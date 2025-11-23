@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   netdata:
-    image: netdata/netdata:v2.4.0
+    image: netdata/netdata:v2.7.3
     hostname: "{{.Node.Hostname}}"
     ports:
       - 19999:19999
