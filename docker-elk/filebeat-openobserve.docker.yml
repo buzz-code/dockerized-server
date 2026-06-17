@@ -50,8 +50,8 @@ output.elasticsearch:
   timeout: 10
   path: '${OPENOBSERVE_PATH}'
   index: default
-  headers:
-    Authorization: "Basic ${OPENOBSERVE_TOKEN}"
+  username: '${OPENOBSERVE_USER}'
+  password: '${OPENOBSERVE_PASSWORD}'
 
 filebeat.inputs.ignore_older: 72h
 filebeat.inputs.scan_frequency: 60s

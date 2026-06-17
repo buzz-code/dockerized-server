@@ -100,7 +100,7 @@ services:
       - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
     configs:
-      - source: filebeat-config18
+      - source: filebeat-config19
         target: /usr/share/filebeat/filebeat.yml
     labels:
       co.elastic.logs/enabled: 'true'
@@ -113,7 +113,6 @@ services:
     - OPENOBSERVE_USER=$OPENOBSERVE_USER
     - OPENOBSERVE_PASSWORD=$OPENOBSERVE_PASSWORD
     - OPENOBSERVE_PATH=$OPENOBSERVE_PATH
-    - OPENOBSERVE_TOKEN=$OPENOBSERVE_TOKEN
     networks:
       - elknet
       - elk_elk
@@ -199,7 +198,7 @@ configs:
       caddy:
   filebeat-config13:
     file: ./docker-elk/filebeat.docker.yml
-  filebeat-config18:
+  filebeat-config19:
     file: ./docker-elk/filebeat-openobserve.docker.yml
   promtail-config3:
     file: ./docker-elk/promtail-config.yml
