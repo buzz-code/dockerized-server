@@ -41,7 +41,7 @@ services:
       resources:
         limits:
           cpus: '0.50'
-          memory: 500m
+          memory: 1024m
       placement:
         constraints: [node.labels.codeserver != true]
 
