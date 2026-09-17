@@ -92,6 +92,26 @@ services:
   #     - elknet
   #     - elk_elk
 
+  openobserve:
+    image: openobserve/openobserve:latest
+    restart: unless-stopped
+    volumes:
+      - openobserve_data:/data
+    environment:
+      - ZO_DATA_DIR=/data
+      - ZO_ROOT_USER_EMAIL=$OPENOBSERVE_ROOT_USER_EMAIL
+      - ZO_ROOT_USER_PASSWORD=$OPENOBSERVE_ROOT_USER_PASSWORD
+    deploy:
+      placement:
+        constraints:
+          - "node.role == manager"
+      labels:
+        caddy: observe.$DOMAIN_NAME
+        caddy.reverse_proxy: "{{upstreams 5080}}"
+    networks:
+      - caddy
+      - elknet
+
   filebeat-openobserve:
     image: elastic/filebeat:7.17.0
     restart: unless-stopped
@@ -110,6 +130,7 @@ services:
       # placement:
       #   constraints: [node.labels.codeserver != true]
     environment:
+    - OPENOBSERVE_HOST=${OPENOBSERVE_HOST:-http://openobserve:5080}
     - OPENOBSERVE_USER=$OPENOBSERVE_USER
     - OPENOBSERVE_PASSWORD=$OPENOBSERVE_PASSWORD
     - OPENOBSERVE_PATH=$OPENOBSERVE_PATH
@@ -179,6 +200,7 @@ volumes:
   netdataconfig:
   netdatalib:
   netdatacache:
+  openobserve_data:
 
 
 networks:

@@ -46,7 +46,7 @@ processors:
       overwrite_keys: true
 
 output.elasticsearch:
-  hosts: ["https://api.openobserve.ai:443"]
+  hosts: ["${OPENOBSERVE_HOST}"]
   timeout: 10
   path: '${OPENOBSERVE_PATH}'
   index: default
